@@ -3,10 +3,10 @@
 [WIP]
 
 Salient Features:
-1. Information about books in a local library
-2. A browse-only library
-3. Users can be registered
-4. Users can receive books
+1. [WIP] Information about books in a local library
+2. [WIP] A browse-only library
+3. [WIP] Users can be registered
+4. [WIP] Users can receive books
 
 
 Compilation and Installation:
