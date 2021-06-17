@@ -12,10 +12,11 @@ import uuid
 from django.db.models.deletion import SET_NULL
 from django.urls import reverse     # Used to generate URLs by reversing the URL patterns
 
+
 class Genre(models.Model):
     """Model representing a book genre."""
 
-    name = models.CharField(max_length=200, help_text='Enter a book genre (e.g. Science Fiction)')
+    name = models.CharField(max_length=200, help_text='Enter a book genre (e.g. Science Fiction)', blank=False)
 
     def __str__(self):
         """String for representing the Model object."""
@@ -24,7 +25,7 @@ class Genre(models.Model):
 class Language(models.Model):
     """Model representing the language for a book."""
 
-    language = models.CharField(max_length=100, help_text='Enter a language for the book (e.g. English)')
+    language = models.CharField(max_length=100, help_text='Enter a language for the book (e.g. English)', blank=False)
 
 
     class Meta:
