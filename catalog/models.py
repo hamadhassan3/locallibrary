@@ -13,7 +13,22 @@ from django.db.models.deletion import SET_NULL
 from django.urls import reverse     # Used to generate URLs by reversing the URL patterns
 
 
-class Genre(models.Model):
+class CatalogModel(models.Model):
+    """The super class for every model in Catalog application.
+    This class ensures that every model stores its date of creation and update
+    """
+
+    # Each model stores its date of creation
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    # Each model stores its date of update whenever a change in the model occurs
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+    class Meta:
+        abstract = True
+
+class Genre(CatalogModel):
     """Model representing a book genre."""
 
     name = models.CharField(max_length=200, help_text='Enter a book genre (e.g. Science Fiction)', blank=False)
@@ -22,7 +37,7 @@ class Genre(models.Model):
         """String for representing the Model object."""
         return self.name
 
-class Language(models.Model):
+class Language(CatalogModel):
     """Model representing the language for a book."""
 
     language = models.CharField(max_length=100, help_text='Enter a language for the book (e.g. English)', blank=False)
@@ -37,7 +52,7 @@ class Language(models.Model):
         return self.language
 
 
-class Book(models.Model):
+class Book(CatalogModel):
     """Model representing a book (but not a specific copy of a book)."""
     title = models.CharField(max_length=200)
 
@@ -68,7 +83,7 @@ class Book(models.Model):
 
 
 
-class BookInstance(models.Model):
+class BookInstance(CatalogModel):
     """Model representing a specific copy of a book (i.e. that can be borrowed from the library)."""
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for this particular book across whole library')
@@ -99,7 +114,7 @@ class BookInstance(models.Model):
         return f'{self.id} ({self.book.title})'
 
 
-class Author(models.Model):
+class Author(CatalogModel):
     """Model representing an author."""
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
