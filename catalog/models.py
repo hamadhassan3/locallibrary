@@ -13,20 +13,43 @@ from django.db.models.deletion import SET_NULL
 from django.urls import reverse     # Used to generate URLs by reversing the URL patterns
 
 
+
+
+
 class CatalogModel(models.Model):
     """The super class for every model in Catalog application.
     This class ensures that every model stores its date of creation and update
     """
 
     # Each model stores its date of creation
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
 
     # Each model stores its date of update whenever a change in the model occurs
-    updated_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
 
 
     class Meta:
         abstract = True
+
+
+class Author(CatalogModel):
+    """Model representing an author."""
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    date_of_birth = models.DateField(null=True, blank=True)
+    date_of_death = models.DateField('Died', null=True, blank=True)
+
+    class Meta:
+        ordering = ['last_name', 'first_name']
+
+    def get_absolute_url(self):
+        """Returns the url to access a particular author instance."""
+        return reverse('author-detail', args=[str(self.id)])
+
+    def __str__(self):
+        """String for representing the Model object."""
+        return f'{self.last_name}, {self.first_name}'
+
 
 class Genre(CatalogModel):
     """Model representing a book genre."""
@@ -36,6 +59,7 @@ class Genre(CatalogModel):
     def __str__(self):
         """String for representing the Model object."""
         return self.name
+
 
 class Language(CatalogModel):
     """Model representing the language for a book."""
@@ -57,8 +81,7 @@ class Book(CatalogModel):
     title = models.CharField(max_length=200)
 
     # Foreign Key used because book can only have one author, but authors can have multiple books
-    # Author as a string rather than object because it hasn't been declared yet in the file
-    author = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True)
 
     summary = models.TextField(max_length=1000, help_text='Enter a brief description of the book')
     isbn = models.CharField('ISBN', max_length=13, unique=True,
@@ -71,7 +94,7 @@ class Book(CatalogModel):
 
     # The language is stored as a OneToOneField because a book can have only one language
     # The Language class is already defined, so it can be used to define the relation
-    language = models.ForeignKey('Language', Language, null = True)
+    language = models.OneToOneField(Language, null = True, on_delete=SET_NULL)
 
     def __str__(self):
         """String for representing the Model object."""
@@ -80,7 +103,6 @@ class Book(CatalogModel):
     def get_absolute_url(self):
         """Returns the url to access a detail record for this book."""
         return reverse('book-detail', args=[str(self.id)])
-
 
 
 class BookInstance(CatalogModel):
@@ -112,29 +134,3 @@ class BookInstance(CatalogModel):
     def __str__(self):
         """String for representing the Model object."""
         return f'{self.id} ({self.book.title})'
-
-
-class Author(CatalogModel):
-    """Model representing an author."""
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    date_of_birth = models.DateField(null=True, blank=True)
-    date_of_death = models.DateField('Died', null=True, blank=True)
-
-    class Meta:
-        ordering = ['last_name', 'first_name']
-
-    def get_absolute_url(self):
-        """Returns the url to access a particular author instance."""
-        return reverse('author-detail', args=[str(self.id)])
-
-    def __str__(self):
-        """String for representing the Model object."""
-        return f'{self.last_name}, {self.first_name}'
-
-
-
-
-
-
-    
