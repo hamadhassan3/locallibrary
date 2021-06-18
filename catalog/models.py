@@ -92,9 +92,9 @@ class Book(CatalogModel):
     genre = models.ManyToManyField(Genre, help_text='Select a genre for this book')
 
 
-    # The language is stored as a OneToOneField because a book can have only one language
+    # The language is stored as a Foreign Key because one language can be associated with many books
     # The Language class is already defined, so it can be used to define the relation
-    language = models.OneToOneField(Language, null = True, on_delete=SET_NULL)
+    language = models.ForeignKey(Language, null = True, on_delete=SET_NULL)
 
     def __str__(self):
         """String for representing the Model object."""
