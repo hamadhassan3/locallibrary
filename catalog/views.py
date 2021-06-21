@@ -28,6 +28,7 @@ def index(request):
         'count_of_genres': count_of_genres,
         'count_of_languages': count_of_languages,
         'count_of_bookinstances': count_of_bookinstance,
+        'count_of_available_books': count_of_available_books,
     }
 
 
