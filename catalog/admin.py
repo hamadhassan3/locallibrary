@@ -56,7 +56,7 @@ class BookAdmin(CatalogAdmin):
 class BookInstanceAdmin(CatalogAdmin):
     
     # Book details are received using book_details function
-    list_display = ('book_details', 'id', 'status', 'due_back')
+    list_display = ('book_details', 'id', 'status', 'borrower', 'due_back')
 
     # We allow filtering options for admin site
     # The books are already sorted according to due_back date
@@ -70,7 +70,7 @@ class BookInstanceAdmin(CatalogAdmin):
             'fields': ('book', 'imprint', 'id')
         }),
         ('Availability', {
-            'fields': ('status', 'due_back')
+            'fields': ('status', 'due_back', 'borrower')
         }),
     )    
 

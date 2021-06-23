@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from .models import Book, BookInstance, Language, Genre, Author
 from django.views import generic
-
-
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 def index(request):
     """This function handles the request for home page
@@ -96,3 +96,28 @@ class AuthorDetailView(generic.DetailView):
     model = Author
     paginate_by = 1
 
+
+class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
+    """Generic class-based view listing books on loan to current user."""
+    model = BookInstance
+    template_name ='catalog/bookinstance_list_borrowed_user.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='o').order_by('due_back')
+
+
+class AllLoanedBooks(PermissionRequiredMixin, generic.ListView):
+    """Displays all books to users with permission"""
+    model = BookInstance
+    template_name ='catalog/bookinstance_list_all_borrowed_librarian.html'
+    paginate_by = 10
+
+    # The user must have these permissions to access this functionality
+    permission_required = 'catalog.can_mark_returned'
+
+
+    def get_queryset(self):
+        """There is no filter on user id so all books are fetched"""
+
+        return BookInstance.objects.filter(status__exact='o').order_by('due_back')

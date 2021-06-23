@@ -18,4 +18,11 @@ urlpatterns = [
     # The address to a specific author's details
     path('author/<int:pk>', views.AuthorDetailView.as_view(), name='author-detail'),
 
+    # The address to borrowed books of a user
+    path('mybooks/', views.LoanedBooksByUserListView.as_view(), name='my-borrowed'),
+
+
+    # The address to all borrowed books
+    path('allbooks/', views.AllLoanedBooks.as_view(), name='all-borrowed'),
+
 ]
