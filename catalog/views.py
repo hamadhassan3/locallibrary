@@ -3,7 +3,7 @@ from .models import Book, BookInstance, Language, Genre, Author
 
 
 
-def index(request):
+def index(request: HttpRequest) -> HttpResponse:
     """This function handles the request for home page
     The home page displays the count of all items in library
     """
