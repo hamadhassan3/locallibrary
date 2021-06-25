@@ -92,9 +92,20 @@ class Book(CatalogModel):
     genre = models.ManyToManyField(Genre, help_text='Select a genre for this book')
 
 
-    # The language is stored as a OneToOneField because a book can have only one language
+    # The language is stored as a Foreign Key because one language can be associated with many books
     # The Language class is already defined, so it can be used to define the relation
-    language = models.OneToOneField(Language, null = True, on_delete=SET_NULL)
+    language = models.ForeignKey(Language, null=True, on_delete=SET_NULL)
+
+
+    def display_genre(self):
+        """This is a less costly way to display genre in Books on admin site
+        Genre is added as a string
+        """
+
+        return ', '.join(genre.name for genre in self.genre.all()[:3])
+
+    display_genre.short_description = 'Genre'
+
 
     def __str__(self):
         """String for representing the Model object."""
@@ -127,6 +138,13 @@ class BookInstance(CatalogModel):
         default='m',
         help_text='Book availability',
     )
+
+    def book_details(self):
+        """This method is used to display book details in book instance fields"""
+
+        return self.book.title
+
+
 
     class Meta:
         ordering = ['due_back']
