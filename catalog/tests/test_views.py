@@ -282,10 +282,10 @@ class RenewBookInstancesViewTest(TestCase):
 
 
 class CreateAuthorViewTest(TestCase):
-    """This class tests the author creation form"""
+    """This class tests the author creation form."""
 
     def setUp(self):
-        """This method initializes test case an author and two users with different permissions"""
+        """This method initializes test case an author and two users with different permissions."""
 
         # Create a user
         test_user1 = User.objects.create_user(username='testuser1', password='1X<ISRUkw+tuK')
@@ -303,7 +303,7 @@ class CreateAuthorViewTest(TestCase):
 
     def test_redirect_if_not_logged_in(self):
         """This method checks if user is redirected to login page
-        when the user tries to access the url and is not logged in
+        when the user tries to access the url and is not logged in.
         """
 
         response = self.client.get(reverse('author-create', kwargs={}))
@@ -313,7 +313,7 @@ class CreateAuthorViewTest(TestCase):
 
     def test_forbidden_if_logged_in_but_not_correct_permission(self):
         """This method asserts that a 403 error message should be shown for a user that is
-        logged in but does'nt have the permission to access the form
+        logged in but does'nt have the permission to access the form.
         """
         
         login = self.client.login(username='testuser1', password='1X<ISRUkw+tuK')
@@ -322,7 +322,7 @@ class CreateAuthorViewTest(TestCase):
 
 
     def test_uses_correct_template(self):
-        """This method checks if the correct template is displayed to a logged in user with valid permissions"""
+        """This method checks if the correct template is displayed to a logged in user with valid permissions."""
 
         login = self.client.login(username='testuser2', password='2HJ1vRV0Z&3iD')
         response = self.client.get(reverse('author-create', kwargs={}))
