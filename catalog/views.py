@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from .models import Book, BookInstance, Language, Genre, Author
 from django.views import generic
+from django.http import HttpResponse, HttpRequest
 
 
 
-def index(request):
+def index(request: HttpRequest) -> HttpResponse:
     """This function handles the request for home page
     The home page displays the count of all items in library
     """

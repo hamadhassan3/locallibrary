@@ -94,7 +94,7 @@ class Book(CatalogModel):
 
     # The language is stored as a Foreign Key because one language can be associated with many books
     # The Language class is already defined, so it can be used to define the relation
-    language = models.ForeignKey(Language, null = True, on_delete=SET_NULL)
+    language = models.ForeignKey(Language, null=True, on_delete=SET_NULL)
 
 
     def display_genre(self):
