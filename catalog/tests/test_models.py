@@ -1,10 +1,9 @@
 from django.test import TestCase
-
 from catalog.models import Author
 
 class AuthorModelTest(TestCase):
+    """Tests the author model"""
 
-    
     @classmethod
     def setUpTestData(cls):
         # Set up non-modified objects used by all test methods

@@ -1,24 +1,17 @@
 import datetime
 import uuid
-
 from django.test import TestCase
 from django.urls import reverse
-
 from catalog.models import Author
-
 from django.utils import timezone
 from django.contrib.auth.models import User # Required to assign User as a borrower
-
 from catalog.models import BookInstance, Book, Genre, Language
-
 from catalog.forms import RenewBookForm
-
 from django.contrib.auth.models import Permission # Required to grant the permission needed to set a book as returned.
-
 from django.contrib.auth.decorators import permission_required
 
 class AuthorListViewTest(TestCase):
-
+    """Tests authors view"""
 
     @classmethod
     def setUpTestData(cls):
@@ -159,8 +152,6 @@ def renew_book_librarian(request, pk):
 
 
 class RenewBookInstancesViewTest(TestCase):
-
-
     def setUp(self):
         # Create a user
         test_user1 = User.objects.create_user(username='testuser1', password='1X<ISRUkw+tuK')
