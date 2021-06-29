@@ -8,9 +8,13 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class RenewBookForm(forms.Form):
+    """A form in which books can be renewed."""
+
     renewal_date = forms.DateField(help_text="Enter a date between now and 4 weeks (default 3).")
 
-    def clean_renewal_date(self):
+    def clean_renewal_date(self) -> datetime.date:
+        """This method checks if a valid renewal date is provided. If not, an error is displayed."""
+
         data = self.cleaned_data['renewal_date']
 
         # Check if a date is not in the past.

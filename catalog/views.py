@@ -1,5 +1,7 @@
 import datetime
-
+import uuid
+from django.http.request import HttpRequest
+from django.http.response import HttpResponse
 from django.shortcuts import render
 from .models import Book, BookInstance, Language, Genre, Author
 from django.views import generic
@@ -140,7 +142,7 @@ class AllLoanedBooks(PermissionRequiredMixin, generic.ListView):
 
 @login_required
 @permission_required('catalog.can_mark_returned', raise_exception=True)
-def renew_book_librarian(request, pk):
+def renew_book_librarian(request: HttpRequest, pk: uuid.UUID) -> HttpResponse:
     """View function for renewing a specific BookInstance by librarian."""
     book_instance = get_object_or_404(BookInstance, pk=pk)
 
