@@ -281,8 +281,6 @@ class CreateAuthorViewTest(TestCase):
         test_user2.user_permissions.add(permission)
         test_user2.save()
 
-
-
     def test_redirect_if_not_logged_in(self):
         """This method checks if user is redirected to login page
         when the user tries to access the url and is not logged in
@@ -302,7 +300,6 @@ class CreateAuthorViewTest(TestCase):
         response = self.client.get(reverse('author-create', kwargs={}))
         self.assertEqual(response.status_code, 403)
 
-
     def test_uses_correct_template(self):
         """This method checks if the correct template is displayed to a logged in user with valid permissions"""
 
@@ -312,14 +309,11 @@ class CreateAuthorViewTest(TestCase):
 
         # Check we used correct template
         self.assertTemplateUsed(response, 'catalog/author_form.html')
-
-
     
     def test_redirects_to_all_author_list_on_success(self):
         """This method asserts that user should be redirected to author details page
         on successfully filling out the form.
         """
-
 
         login = self.client.login(username='testuser2', password='2HJ1vRV0Z&3iD')
         valid_first_name = 'authorfirstname'
