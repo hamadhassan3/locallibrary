@@ -53,9 +53,6 @@ class AuthorListViewTest(TestCase):
         self.assertEqual(len(response.context['author_list']), 3)
 
 
-
-
-
 class LoanedBookInstancesByUserListViewTest(TestCase):
     def setUp(self):
         # Create two users
@@ -113,8 +110,6 @@ class LoanedBookInstancesByUserListViewTest(TestCase):
         self.assertTemplateUsed(response, 'catalog/bookinstance_list_borrowed_user.html')
 
 
-
-
 @permission_required('catalog.can_mark_returned')
 def renew_book_librarian(request, pk):
     """View function for renewing a specific BookInstance by librarian."""
@@ -146,9 +141,6 @@ def renew_book_librarian(request, pk):
     }
 
     return render(request, 'catalog/book_renew_librarian.html', context)
-
-
-
 
 
 class RenewBookInstancesViewTest(TestCase):
@@ -271,7 +263,6 @@ class RenewBookInstancesViewTest(TestCase):
         self.assertFormError(response, 'form', 'renewal_date', 'Invalid date - renewal more than 4 weeks ahead')
 
 
-
 class CreateAuthorViewTest(TestCase):
     """This class tests the author creation form"""
 
@@ -339,4 +330,3 @@ class CreateAuthorViewTest(TestCase):
                                             'last_name': valid_last_name, 'date_of_birth': valid_date_of_birth,
                                             'date_of_death': valid_date_of_death})
         self.assertRedirects(response, reverse('author-detail', kwargs={'pk':1}))
-
