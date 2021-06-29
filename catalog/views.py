@@ -1,3 +1,4 @@
+from django.db.models.query import QuerySet
 from django.shortcuts import render
 from .models import Book, BookInstance, Language, Genre, Author
 from django.views import generic
@@ -103,7 +104,7 @@ class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
     template_name ='catalog/bookinstance_list_borrowed_user.html'
     paginate_by = 10
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='o').order_by('due_back')
 
 
@@ -117,7 +118,7 @@ class AllLoanedBooks(PermissionRequiredMixin, generic.ListView):
     permission_required = 'catalog.can_mark_returned'
 
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         """There is no filter on user id so all books are fetched"""
 
         return BookInstance.objects.filter(status__exact='o').order_by('due_back')
