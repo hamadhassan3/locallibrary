@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('catalog', '0006_alter_bookinstance_options'),
+        ('catalog', '0005_auto_20210629_1641'),
     ]
 
     operations = [
