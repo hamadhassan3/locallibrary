@@ -9,11 +9,35 @@
   </p>
   
   
-  <p><strong>Date of death:</strong>
+  
   
     {% if author.date_of_death %}
+      <p><strong>Date of death:</strong></p>
       {{ author.date_of_death }}
+      
+
     {% endif %}
+
+
+
+
+    {% for book in author.book_set.all %}
+      
+      <hr>
+      <p>
+        <strong>
+          <a href="{{ book.get_absolute_url }}">{{ book.title }}</a>
+        </strong>
+        ({{ book.bookinstance_set.count }})
+      </p>
+
+      <p>
+        {{ book.summary }}
+      </p>
+
+    {% endfor %}
+
+
   </p>
 
 

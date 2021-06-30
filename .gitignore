@@ -1,3 +1,8 @@
-catalog/__pycache__/
-catalog/migrations/__pycache__/
-locallibrary/__pycache__/
+# pyc files
+*.pyc
+
+# Text backup files
+*.bak
+
+# Database
+*.sqlite3
