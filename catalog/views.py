@@ -13,9 +13,10 @@ from catalog.forms import RenewBookForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from catalog.models import Author
+from django.http import HttpResponse, HttpRequest
 
 
-def index(request):
+def index(request: HttpRequest) -> HttpResponse:
     """This function handles the request for home page
     The home page displays the count of all items in library
     """
