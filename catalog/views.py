@@ -1,5 +1,8 @@
 import datetime
-
+import uuid
+from django.http.request import HttpRequest
+from django.http.response import HttpResponse
+from django.db.models.query import QuerySet
 from django.shortcuts import render
 from .models import Book, BookInstance, Language, Genre, Author
 from django.views import generic
@@ -116,7 +119,7 @@ class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
     template_name ='catalog/bookinstance_list_borrowed_user.html'
     paginate_by = 10
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='o').order_by('due_back')
 
 
@@ -130,19 +133,16 @@ class AllLoanedBooks(PermissionRequiredMixin, generic.ListView):
     permission_required = 'catalog.can_mark_returned'
 
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         """There is no filter on user id so all books are fetched"""
 
         return BookInstance.objects.filter(status__exact='o').order_by('due_back')
 
 
 
-
-
-
 @login_required
 @permission_required('catalog.can_mark_returned', raise_exception=True)
-def renew_book_librarian(request, pk):
+def renew_book_librarian(request: HttpRequest, pk: uuid.UUID) -> HttpResponse:
     """View function for renewing a specific BookInstance by librarian."""
     book_instance = get_object_or_404(BookInstance, pk=pk)
 
