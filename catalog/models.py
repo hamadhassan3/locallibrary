@@ -12,8 +12,8 @@ import uuid
 from django.db.models.deletion import SET_NULL
 from django.urls import reverse     # Used to generate URLs by reversing the URL patterns
 
-
-
+from django.contrib.auth.models import User
+from datetime import date
 
 
 class CatalogModel(models.Model):
@@ -38,6 +38,7 @@ class Author(CatalogModel):
     last_name = models.CharField(max_length=100)
     date_of_birth = models.DateField(null=True, blank=True)
     date_of_death = models.DateField('Died', null=True, blank=True)
+    
 
     class Meta:
         ordering = ['last_name', 'first_name']
@@ -123,6 +124,13 @@ class BookInstance(CatalogModel):
     book = models.ForeignKey('Book', on_delete=models.RESTRICT, null=True)
     imprint = models.CharField(max_length=200)
     due_back = models.DateField(null=True, blank=True)
+    borrower = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+
+    @property
+    def is_overdue(self):
+        if self.due_back and date.today() > self.due_back:
+            return True
+        return False
 
     LOAN_STATUS = (
         ('m', 'Maintenance'),
@@ -130,6 +138,10 @@ class BookInstance(CatalogModel):
         ('a', 'Available'),
         ('r', 'Reserved'),
     )
+
+
+
+
 
     status = models.CharField(
         max_length=1,
@@ -148,6 +160,9 @@ class BookInstance(CatalogModel):
 
     class Meta:
         ordering = ['due_back']
+
+        # These permissions give access to specific functionalities
+        permissions = (("can_mark_returned", "Set book as returned"),)
 
     def __str__(self):
         """String for representing the Model object."""
