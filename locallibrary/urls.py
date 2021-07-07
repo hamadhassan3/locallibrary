@@ -21,18 +21,18 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
 ]
 
 # The path to catalog app is added here
 urlpatterns += [
-    path('catalog/', include('catalog.urls')),
+    path("catalog/", include("catalog.urls")),
 ]
 
 
 # The root URL is redirected to catalog
 urlpatterns += [
-    path('', RedirectView.as_view(url='catalog/', permanent=True)),
+    path("", RedirectView.as_view(url="catalog/", permanent=True)),
 ]
 
 
@@ -40,5 +40,5 @@ urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 # The url for authentication system mapping
 urlpatterns += [
-    path('accounts/', include('django.contrib.auth.urls')),
+    path("accounts/", include("django.contrib.auth.urls")),
 ]
