@@ -7,18 +7,22 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('catalog', '0001_initial'),
+        ("catalog", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='book',
-            name='language',
-            field=models.ForeignKey(null=True, on_delete=catalog.models.Language, to='catalog.language'),
+            model_name="book",
+            name="language",
+            field=models.ForeignKey(
+                null=True, on_delete=catalog.models.Language, to="catalog.language"
+            ),
         ),
         migrations.AlterField(
-            model_name='language',
-            name='language',
-            field=models.CharField(help_text='Enter a language for the book (e.g. English)', max_length=100),
+            model_name="language",
+            name="language",
+            field=models.CharField(
+                help_text="Enter a language for the book (e.g. English)", max_length=100
+            ),
         ),
     ]

@@ -9,17 +9,25 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('catalog', '0004_alter_book_language'),
+        ("catalog", "0004_alter_book_language"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='bookinstance',
-            options={'ordering': ['due_back'], 'permissions': (('can_mark_returned', 'Set book as returned'),)},
+            name="bookinstance",
+            options={
+                "ordering": ["due_back"],
+                "permissions": (("can_mark_returned", "Set book as returned"),),
+            },
         ),
         migrations.AddField(
-            model_name='bookinstance',
-            name='borrower',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL),
+            model_name="bookinstance",
+            name="borrower",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
     ]

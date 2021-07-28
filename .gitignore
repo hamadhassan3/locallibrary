@@ -6,3 +6,7 @@
 
 # Database
 *.sqlite3
+
+# Coverage
+*.coverage
+htmlcov/
